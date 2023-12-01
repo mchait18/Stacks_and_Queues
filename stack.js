@@ -58,4 +58,42 @@ class Stack {
   }
 }
 
+function reverseString(str) {
+  let strStack = new Stack()
+  for (let char of str) {
+    strStack.push(char)
+  }
+  let reversed = ""
+  let currentVal = strStack.first
+  while (currentVal) {
+    reversed += currentVal.val
+    currentVal = currentVal.next
+  }
+  return reversed;
+}
+
+function balancedBracket(str) {
+  let stack = new Stack()
+  let openBracket = "{[("
+  let closeBracket = "}])"
+  let balanced = true;
+
+  for (let char of str) {
+    if (openBracket.indexOf(char) !== -1) {
+      stack.push(char)
+    }
+    if (closeBracket.indexOf(char) !== -1) {
+      //check if they are a pair
+      let topStack = stack.peek()
+      if (topStack === "{" && char === "}"
+        || topStack === "(" && char === ")"
+        || topStack === "[" && char === "]")
+        stack.pop()
+    }
+  }
+  if (!stack.isEmpty()) balanced = false
+  return balanced
+}
+console.log("bb is ", balancedBracket("((ok) [nope)]"))
+
 module.exports = Stack;
